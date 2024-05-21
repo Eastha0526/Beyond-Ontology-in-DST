@@ -11,7 +11,7 @@ import time
 import sys
 import re
 from tqdm import tqdm
-openai.api_key = "sk-proj-iKFnug5HFGu9KocuEpmkT3BlbkFJZ7doaLBhNoaejeFQa09N"
+openai.api_key = "you_api_key"
 
 
 class ChatGPT:
