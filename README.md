@@ -40,7 +40,7 @@ You can load the provided weights directly from the \checkpoint folder and perfo
 How to make inference:
 
 ```
-python3 generate_zero_shot.py --load_8bit = True --base_model = 'meta-llama/Meta-Llama-3-8B' --lora_weights './ATOM_Results_zero-shot_MultiWOZ2.4' --testfile_name './Data/MULTIWOZ2.4_preprocess/test.json' --testfile_idx './Data/MULTIWOZ2.4_preprocess/test.idx' --output_file './ATOM_result/MULTIWOZ2.4.txt'
+python3 generate_zero_shot.py --load_8bit True --base_model = 'meta-llama/Meta-Llama-3-8B' --lora_weights './ATOM_Results_zero-shot_MultiWOZ2.4' --testfile_name './Data/MULTIWOZ2.4_preprocess/test.json' --testfile_idx './Data/MULTIWOZ2.4_preprocess/test.idx' --output_file './ATOM_result/MULTIWOZ2.4.txt'
 ```
 
 ## DST Evaluation
