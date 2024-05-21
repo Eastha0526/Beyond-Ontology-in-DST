@@ -5,8 +5,7 @@ import fire
 import torch
 import transformers
 from peft import PeftModel
-from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import GenerationConfig, AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 from utils.callbacks import Iteratorize, Stream
 from utils.prompter import Prompter
@@ -31,9 +30,9 @@ def main(
     server_name: str = "0.0.0.0",  # Allows to listen on all interfaces by providing '0.
     share_gradio: bool = False,
     split_id: str = "",
-    testfile_name: str = "./Data/MULTIWOZ2.4_preprocess/sample.json",
-    testfile_idx: str = "./Data/MULTIWOZ2.4_preprocess/sample.idx",
-    output_file: str = "./0520.txt",
+    testfile_name: str = "./Data/MULTIWOZ2.4_preprocess/test.json",
+    testfile_idx: str = "./Data/MULTIWOZ2.4_preprocess/test.idx",
+    output_file: str = "./ATOM_result/MULTIWOZ2.4.txt",
     except_domain: str = "",
 ):
     
@@ -45,8 +44,6 @@ def main(
     prompter = Prompter(prompt_template)
     tokenizer = AutoTokenizer.from_pretrained(base_model)
 
-    #print(torch.cuda.is_available())
-    #sys.exit(1)
     if device == "cuda":
         model = AutoModelForCausalLM.from_pretrained(
             base_model,
@@ -80,9 +77,6 @@ def main(
             lora_weights,
             device_map={"": device},
         )
-    #print(model.config.use_cache)
-    #sys.exit(1)
-    # unwind broken decapoda-research config
     model.config.pad_token_id = tokenizer.pad_token_id = 0  # unk
     model.config.bos_token_id = 1
     model.config.eos_token_id = 2
@@ -140,47 +134,19 @@ def main(
         s = generation_output.sequences[0]
         output = tokenizer.decode(s)
         return prompter.get_response(output)
-        #return tokenizer.batch_decode(generation_output, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-        #return output.split("### Response:")[1].strip()
-
-
-
-    # testing code for readme
-    # for instruction in [
-    #     "Tell me about alpacas.",
-    #     "Tell me about the president of Mexico in 2019.",
-    #     "Tell me about the king of France in 2019.",
-    #     "List all Canadian provinces in alphabetical order.",
-    #     "Write a Python program that prints the first 10 Fibonacci numbers.",
-    #     "Write a program that prints the numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'.",  # noqa: E501
-    #     "Tell me five words that rhyme with 'shock'.",
-    #     "Translate the sentence 'I have no mouth but I must scream' into Spanish.",
-    #     "Count up from 1 to 500.",
-    # ]:
-    #     print("Instruction:", instruction)
-    #     print("Response:", evaluate(instruction))
-    #     print()
 
     def read_json_as_list(filename):
         data_list = []
         with open(filename, 'r') as file:
-            # 파일 내용 전체를 읽습니다.
             content = file.read()
-            # 각 JSON 객체를 분리합니다.
-            # 표준적인 형태가 아니므로, 정확한 구분 방법을 사용해야 합니다.
-            # 예를 들어, '}'와 '{' 사이에 새 줄이 있다고 가정하면 다음과 같이 할 수 있습니다:
             objects = content.split('}\n{')
-            # 첫 번째와 마지막 객체를 정리합니다.
             objects[0] = objects[0] + '}'
             objects[-1] = '{' + objects[-1]
-            # 중간 객체들에 대해서는 앞뒤로 중괄호를 추가해줍니다.
             for i in range(1, len(objects)-1):
                 objects[i] = '{' + objects[i] + '}'
-            # 각 객체를 JSON으로 파싱하여 리스트에 추가합니다.
             for obj in objects:
                 data_list.append(json.loads(obj))
         return data_list
-
 
     print(f"output filename: {output_file}")
     print(f"test filename: {testfile_name}")
@@ -192,7 +158,7 @@ def main(
         result_out = open(output_file, "w", encoding='utf-8')
         begin_id = 0 # 
         print("——————————————————————————————Write from scratch——————————————————————————————")
-    else: # 
+    else:  
         with open(output_file, "r") as f:
             lines = f.readlines()
             begin_id = len(lines)
@@ -204,10 +170,8 @@ def main(
   
     data = read_json_as_list(testfile_name)
     for idx_ in tqdm(range(begin_id, len(data))):
-    #for idx_ in range(begin_id, len(data)):
         sample = data[idx_]
         idx_line = idx_lines[idx_].strip()
-        # print(sample)
         dial_json_n, dial_idx, turn_idx, frame_idx, d_name, s_name = idx_line.split("|||") 
 
         Response_list = []
@@ -218,19 +182,14 @@ def main(
         input2 = input_initial[:idx1] + "\n" + input_initial[idx2:]
         input2 = input2 + "If the slot is not mentioned in the dialogue, just return NONE. \n "
         input2 = input2 + "So the value of slot <"+ d_name+ "-" + s_name +"> is "
-        print(input2)
         Response = evaluate(input = input2 + "\n")
         Response_list.append(Response)
-
-        #print("Input:", input2)
         print("Response list:", Response_list)
         print("Ground truth:", sample['state'])
         print()
 
         result_out.write(idx_line + "|||" + str(Response_list))
         result_out.write("\n")
-
-        #break
     result_out.close()
 
 if __name__ == "__main__":
