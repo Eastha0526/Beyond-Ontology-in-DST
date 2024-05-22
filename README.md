@@ -32,8 +32,8 @@ We were provided with preprocessing scripts and base scripts by [LDST](https://g
 python3 finetune.py --base_model 'meta-llama/Meta-Llama-3-8B' \
                     --data_path '$DATA_DIR' \
                     --output_dir '$OUTPUT_DIR' \
-                    --num_epochs=2 \
-                    --micro_batch_size=8
+                    --num_epochs 2 \
+                    --micro_batch_size 8
 ```
 Training on a single Nvidia 4090 GPU is expected to take approximately 180 hours. Upon completion, the fine-tuned model weights will be saved in `$output_dir`.
 
@@ -67,7 +67,7 @@ python3 generate.py --temperature 0.2 \
 ```ruby
 python3 evalutation.py --data_dir '$DATA_DIR' \
                        --output_dir '$DATA_DIR/output/' \
-                       --test_idx '$DATA_DIR/test.idx'
+                       --test_idx '$DATA_DIR'
 ```
 
 ## GNN Training
