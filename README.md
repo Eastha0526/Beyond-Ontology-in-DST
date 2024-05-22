@@ -29,18 +29,23 @@ We were provided with preprocessing scripts and base scripts by [LDST](https://g
 ## DST Training (`finetune.py`)
 
 ```
-python3 finetune.py --base_model 'meta-llama/Meta-Llama-3-8B' --data_path './Data/MULTIWOZ2.4_preprocess/train_LLM_zero-shot.json' --output_dir './ATOM_Results_zero-shot_MultiWOZ2.4' --num_epochs=2 --micro_batch_size=8
+python3 finetune.py --base_model 'meta-llama/Meta-Llama-3-8B' --data_path '$DATA_DIR' --output_dir '$OUTPUT_DIR' --num_epochs=2 --micro_batch_size=8
 ```
 Training on a single Nvidia 4090 GPU is expected to take approximately 180 hours. Upon completion, the fine-tuned model weights will be saved in `$output_dir`.
 
-## DST Inference (`generate_zero_shot.py`)
+## DST Inference (`generate_zero_shot.py`, `generate_gpt.py`)
 
 You can load the provided weights directly from the \checkpoint folder and perform inference.
 
-How to make inference:
+How to make inference with pre-trained model:
 
 ```
-python3 generate_zero_shot.py --load_8bit True --base_model = 'meta-llama/Meta-Llama-3-8B' --lora_weights './ATOM_Results_zero-shot_MultiWOZ2.4' --testfile_name './Data/MULTIWOZ2.4_preprocess/test.json' --testfile_idx './Data/MULTIWOZ2.4_preprocess/test.idx' --output_file './ATOM_result/MULTIWOZ2.4.txt'
+python3 generate_zero_shot.py --load_8bit True --base_model 'meta-llama/Meta-Llama-3-8B' --lora_weights '$OUTPUT_DIR' --testfile_name '$DATA_DIR' --testfile_idx '$DATA_DIR' --output_file '$OUTPUT_DIR'
+```
+
+How to make inference with GPT API:
+```
+python3 generate.py --temperature 0.2 --test_data_dir '$DATA_DIR' --test_data_idx '$DATA_DIR' --output_dir '$OUTPUT_DIR' --output_file '$OUPUT_DIR/output/'
 ```
 
 ## DST Evaluation
@@ -67,8 +72,7 @@ python3 ATOM.py
 
 ## Acknowledgements
 
-1. [LDST]() : upon which our overall code is built.
-2. [FastChat]() : we borowwed the chat templates from this repository.
+1. [LDST](https://github.com/WoodScene/LDST) : upon which our overall code is built.
 
 They have been a great addition to our research.
 
