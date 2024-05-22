@@ -6,6 +6,7 @@ Here's the link to the archive:
 
 ## Overview
 
+<img width="7316" alt="figure2" src="https://github.com/Eastha0526/ATOM/assets/110336043/458e1feb-b3ff-415b-89ac-68c388a46e3c">
 Traditional Dialog State Tracking (DST) systems struggle with multi-domain and complex conversations. To address this, we propose the ATOM model, which combines large language models (LLMs) and graph neural networks (GNNs) for task-oriented dialogue. Our approach uses instruction tuning and zero-shot inference for semantic DST, effectively capturing user intents. GNNs graphically represent the dialogue state and predict slot-value links, improving slot determination with minimal user interaction. Experimental results show that ATOM excels in distinguishing various intents and performs well with heuristic and latent features, making it suitable for real-world applications and enhancing slot value organization in user utterances.
 
 ## Environment Setup
