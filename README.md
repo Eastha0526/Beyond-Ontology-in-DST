@@ -28,7 +28,7 @@ We were provided with preprocessing scripts and base scripts by [LDST](https://g
 
 ## DST Training (`finetune.py`)
 
-```
+```ruby
 python3 finetune.py --base_model 'meta-llama/Meta-Llama-3-8B' \
                     --data_path '$DATA_DIR' \
                     --output_dir '$OUTPUT_DIR' \
@@ -43,7 +43,7 @@ You can load the provided weights directly from the \checkpoint folder and perfo
 
 How to make inference with pre-trained model:
 
-```
+```ruby
 python3 generate_zero_shot.py --load_8bit True \
                               --base_model 'meta-llama/Meta-Llama-3-8B' \
                               --lora_weights '$OUTPUT_DIR' \
@@ -53,7 +53,8 @@ python3 generate_zero_shot.py --load_8bit True \
 ```
 
 How to make inference with GPT API:
-```
+
+```ruby
 python3 generate.py --temperature 0.2 \
                     --test_data_dir '$DATA_DIR' \
                     --test_data_idx '$DATA_DIR' \
@@ -63,7 +64,7 @@ python3 generate.py --temperature 0.2 \
 
 ## DST Evaluation
 
-```
+```ruby
 python3 evalutation.py --data_dir '$DATA_DIR' \
                        --output_dir '$DATA_DIR/output/' \
                        --test_idx '$DATA_DIR/test.idx'
@@ -73,7 +74,7 @@ python3 evalutation.py --data_dir '$DATA_DIR' \
 
 To train the gnn with the VGAE model we created 
 
-```
+```ruby
 python3 train_gnn.py --data_dir '$DATA_DIR' \
                      --output_dir '$OUTPUT_DIR'
 ```
@@ -82,7 +83,7 @@ python3 train_gnn.py --data_dir '$DATA_DIR' \
 
 To run an atom model that predicts intent within the following conversation 
 
-```
+```ruby
 python3 ATOM.py
 ```
 
