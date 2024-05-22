@@ -46,12 +46,9 @@ def make_evaluation():
     data_file_path: str = "",
     result_file_path: str = "",
     output_file_path: str = "",
-
-    data_file_path = "data.json"
+    
     with open(data_file_path, 'r') as f:
         data = json.load(f)
-
-    result_file_path = "llama_result_multiwoz20.txt"
     with open(result_file_path, 'r') as f:
         lines = f.readlines()
 
@@ -85,7 +82,6 @@ def make_evaluation():
 
     joint_accuracy = turn_correct / total_turns
 
-    output_file_path = ""
     with open(output_file_path, 'w') as f:
         f.writelines(results)
 
