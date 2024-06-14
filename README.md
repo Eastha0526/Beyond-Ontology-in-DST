@@ -6,7 +6,7 @@ Here's the link to the archive:
 
 ## Overview
 
-<img width="7316" alt="figure2" src="https://github.com/Eastha0526/ATOM/assets/110336043/458e1feb-b3ff-415b-89ac-68c388a46e3c">
+![figure2(2)](https://github.com/Eastha0526/ATOM/assets/110336043/e7758bc3-8614-4a7e-8e0a-8c4c987a128d)
 Goal-oriented chatbots play a key role in automating user tasks such as booking flights or making restaurant reservations. Key to the effectiveness of these systems is Dialog State Tracking (DST), which captures user intent and the state of the conversation. Existing DST approaches that rely on fixed ontologies and manual slot value compilation have suffered from a lack of adaptability and open domain applicability. To address this, we propose a novel approach to enhance DST using instruction tuning and prompting strategy without ontology. In the prompt strategy stage, we design optimal DST prompts to enable LLM to make thought-based inferences and incorporate an anti-hallucination stage to accurately track dialog state and user intent in diverse conversation. Furthermore, a Variational Graph Auto-Encoder (VGAE) phase ensures DST accuracy based on dialogue context and intentions. The approach achieved state-of-the-art with a JGA of 42.57% compared to the ontology-less DST model, which even outperformed on open-domain real-world conversations. This work represents a significant advance in DST, enabling more adaptive and accurate goal-oriented chatbots.
 ## Environment Setup
 
