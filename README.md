@@ -2,13 +2,12 @@
 
 Here's the link to the archive:
 
-> [Advancing Tasked-Oriented Dialogue with GNN and LLM: From A Link Prediction Perspective]()
+> [To Ontology-free and Beyond: Dialogue State Tracking for Goal-oriented Chatbot]()
 
 ## Overview
 
 <img width="7316" alt="figure2" src="https://github.com/Eastha0526/ATOM/assets/110336043/458e1feb-b3ff-415b-89ac-68c388a46e3c">
-Traditional Dialog State Tracking (DST) systems struggle with multi-domain and complex conversations. To address this, we propose the ATOM model, which combines large language models (LLMs) and graph neural networks (GNNs) for task-oriented dialogue. Our approach uses instruction tuning and zero-shot inference for semantic DST, effectively capturing user intents. GNNs graphically represent the dialogue state and predict slot-value links, improving slot determination with minimal user interaction. Experimental results show that ATOM excels in distinguishing various intents and performs well with heuristic and latent features, making it suitable for real-world applications and enhancing slot value organization in user utterances.
-
+Goal-oriented chatbots play a key role in automating user tasks such as booking flights or making restaurant reservations. Key to the effectiveness of these systems is Dialog State Tracking (DST), which captures user intent and the state of the conversation. Existing DST approaches that rely on fixed ontologies and manual slot value compilation have suffered from a lack of adaptability and open domain applicability. To address this, we propose a novel approach to enhance DST using instruction tuning and prompting strategy without ontology. In the prompt strategy stage, we design optimal DST prompts to enable LLM to make thought-based inferences and incorporate an anti-hallucination stage to accurately track dialog state and user intent in diverse conversation. Furthermore, a Variational Graph Auto-Encoder (VGAE) phase ensures DST accuracy based on dialogue context and intentions. The approach achieved state-of-the-art with a JGA of 42.57\% compared to the ontology-less DST model, which even outperformed on open-domain real-world conversations. This work represents a significant advance in DST, enabling more adaptive and accurate goal-oriented chatbots.
 ## Environment Setup
 
 ```
@@ -66,7 +65,7 @@ python3 generate.py --temperature 0.2 \
 ## DST Evaluation
 
 ```ruby
-python3 evalutation.py --data_dir '$DATA_DIR' \
+python3 eval.py --data_dir '$DATA_DIR' \
                        --output_dir '$DATA_DIR/output/' \
                        --test_idx '$DATA_DIR'
 ```
@@ -80,13 +79,7 @@ python3 train_gnn.py --data_dir '$DATA_DIR' \
                      --output_dir '$OUTPUT_DIR'
 ```
 
-## ATOM
 
-To run an atom model that predicts intent within the following conversation 
-
-```ruby
-python3 ATOM.py
-```
 
 ## Acknowledgements
 
@@ -100,7 +93,7 @@ If you can cite [our paper]():
 
 ```
 @article{lee2024atom,
-title={Advancing Tasked-Oriented Dialogue with GNN and LLM: From A Link Prediction Perspective},
+title={To Ontology-free and Beyond: Dialogue State Tracking for Goal-oriented Chatbot},
 author={Sejin Lee, Dongha Kim, and Min Song},
 journal={arXiv preprint },
 year={2024}
