@@ -138,7 +138,7 @@ def main(args):
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--instruct", type=str, 
-                        default="Answer in the format {‘domain’: , ‘slot’: , ‘value’: }. Track each slot-value if multiple are present in the sentence without any explanation. Choose the domain from ['Hospital', 'Restaurant', 'Hotel', 'Attraction', 'Taxi', 'Train', 'Police', 'Bus', 'General']. Perform Dialogue State Tracking for the given utterance:", help = "")
+                        default="Answer in the format {‘domain’: , ‘slot’: , ‘value’: }. Track each slot-value if multiple are present in the sentence without any explanation. Perform Dialogue State Tracking for the given utterance:", help = "")
   
     parser.add_argument("--temperature", type=float, default=0.2, help="")
     parser.add_argument("--output_dir", type=str, default="./")
