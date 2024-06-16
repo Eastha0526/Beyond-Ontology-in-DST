@@ -5,19 +5,13 @@ import json
 from glob import glob
 from random import sample
 
-domain_desc_flag = True # To append domain descriptions or not 
-slot_desc_flag = True  # To append slot descriptions or not 
-PVs_flag = True # for categorical slots, append possible values as suffix
-
 def preprocess(dial_json, schema, out, idx_out, domain_list, frame_idxs, test_json_list, val_json_list, split):
   dial_json_n = dial_json.split("/")[-1]
   dial_json = open(dial_json)
   dial_json = json.load(dial_json)
-#   print(len(dial_json))# 10438
-#   sys.exit(1)
+
   count = 0
   for dial_idx in dial_json.keys():
-    #print(dial_idx)
 
     if split == "train":
         if dial_idx in test_json_list or dial_idx in val_json_list:
@@ -33,20 +27,14 @@ def preprocess(dial_json, schema, out, idx_out, domain_list, frame_idxs, test_js
         sys.exit(1)
 
     dial = dial_json[dial_idx]['log']
-    #print(dial)
-    #sys.exit(1)
     cur_dial = ""
 
     for turn_id in range(len(dial)):
-      #print("turn id :", turn_id)
       content = dial[turn_id]
-      #print(len(content['metadata']))
       if len(content['metadata']) == 0:
         speaker = " [USER] " 
-        #assert turn_id %2 == 0
       else:
         speaker = " [SYSTEM] "   
-        #assert turn_id %2 == 1
       uttr = content['text']
       cur_dial += speaker
       cur_dial += uttr  
@@ -58,37 +46,25 @@ def preprocess(dial_json, schema, out, idx_out, domain_list, frame_idxs, test_js
           #print(frame_key) #taxi
           if frame_key not in domain_list:
               continue
-          #print(turn_slot_dic[frame_key]['semi'])
           for slot_act in turn_slot_dic[frame_key]['semi'].keys():
               if turn_slot_dic[frame_key]['semi'][slot_act] != "":
                 active_slot_values[frame_key.lower()+"-"+slot_act.lower()] = turn_slot_dic[frame_key]['semi'][slot_act] # 这也不一样
           for slot_act in turn_slot_dic[frame_key]['book'].keys():
               if slot_act != "booked" and turn_slot_dic[frame_key]['book'][slot_act] != "":
-                active_slot_values[frame_key.lower()+"-"+slot_act.lower()] = turn_slot_dic[frame_key]['book'][slot_act] # 这也不一样
-        # if len(active_slot_values) > 0:
-        #print("active_slot_values: ", active_slot_values) #{'hotel-name': 'not mentioned', 'hotel-area': 'not mentioned', 'hotel-parking': 'not mentioned', 'hotel-pricerange': 'cheap', 'hotel-stars': 'not mentioned', 'hotel-internet': 'not mentioned', 'hotel-type': 'hotel'}
-        #sys.exit(1)
-        # iterate thourgh each domain-slot pair in each user turn 
+                active_slot_values[frame_key.lower()+"-"+slot_act.lower()] = turn_slot_dic[frame_key]['book'][slot_act] # 这也不一样n 
         for domain in schema.keys():
-          # skip domains that are not in the testing set
 
           slots = [domain.split("-")[1]]
           d_name = domain.split("-")[0]
           for slot in slots:
             s_name = slot
-            # generate schema prompt w/ or w/o natural langauge descriptions
             schema_prompt = ""
             schema_prompt += " [domain] " + d_name + ","
             schema_prompt += " [slot] " + s_name + "."
             if PVs_flag:
-              # only append possible values if the slot is categorical
               if len(schema[domain]) > 0:
                 PVs = ", ".join(schema[domain])
-                #print(PVs)
-                #sys.exit(1)
                 schema_prompt += " [Possible Values] " + PVs
-            #print("schema prompt:", schema_prompt)
-            #sys.exit(1)
             domain_slot = d_name.lower() + "-" + s_name.lower()
             s_name2 = s_name
             while " " in s_name2:
@@ -96,39 +72,19 @@ def preprocess(dial_json, schema, out, idx_out, domain_list, frame_idxs, test_js
             domain_slot2 = d_name.lower() + "-" + s_name2.lower()
             if domain_slot in active_slot_values.keys():
               target_value = active_slot_values[domain_slot]
-              ##print(target_value)
-              #sys.exit()
             elif domain_slot2 in active_slot_values.keys():
               target_value = active_slot_values[domain_slot2]
-              #print("laizhele ")
-              #print(domain_slot2)
-              #sys.exit(1)
             else:
-              # special token for non-active slots
               target_value = "NONE"
             
             line = { "dialogue": cur_dial + schema_prompt, "state":  target_value }
-            
-            #print("line: ", line)
-            #sys.exit()
-            #print()
-            #print()
+
             out.write(json.dumps(line))
             out.write("\n")
-            #count +=1
-            #if slot["name"] in active_slot_values.keys():
-            #  sys.exit(1)
-            # write idx file for post-processing deocding
             idx_list = [ dial_json_n, str(dial_idx), str(turn_id), str(frame_idxs[d_name]), d_name, s_name ]
-            #print(idx_list)
-            #sys.exit(1)
             idx_out.write("|||".join(idx_list))
             idx_out.write("\n")
       count +=1
-
-      #sys.exit(1)
-      #if count >2:
-      #  sys.exit(1)
   return
 
 
@@ -148,10 +104,7 @@ def Generate_data(domain_list):
     for service_idx in range(len(domain_list)):
         service = domain_list[service_idx]
         frame_idxs[service] = service_idx
-    #print(frame_idxs) #{'hotel': 0, 'train': 1, 'attraction': 2, 'restaurant': 3, 'hospital': 4, 'taxi': 5, 'bus': 6}
-    #sys.exit(1)
-    #frame_idxs = {"train": 0, "taxi":1, "bus":2, "police":3, "hotel":4, "restaurant":5, "attraction":6, "hospital":7}
-
+  
     # skip domains that are not in the testing set
     #excluded_domains = ["police", "hospital", "bus"]
     
@@ -184,8 +137,6 @@ def Generate_data(domain_list):
         out.close()
     print("--------Finish Preprocessing---------")
 
-
-# 先统计一下训练集和测试集中的service有哪些区别
 def Analysis():
     data_path = "./MULTIWOZ20/"
 
