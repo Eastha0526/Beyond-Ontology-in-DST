@@ -17,7 +17,7 @@ from tqdm import tqdm
 from openai import OpenAI
 
 # Edit this part for your setup
-client = OpenAI(api_key="sk-proj-iKFnug5HFGu9KocuEpmkT3BlbkFJZ7doaLBhNoaejeFQa09N")
+client = OpenAI(api_key="api_key")
 # client = OpenAI(api_key="local-generated-key", base_url="http://devnuc.lan:5000/v1")
 
 def query_llm(messages, max_tokens=2048, temperature=0.1):
@@ -158,7 +158,7 @@ if __name__=='__main__':
     # parser.add_argument("--instruct", type=str, 
     #                     default="Now you need to perform the task of multi-domain dialogue state tracking. You need to return the value of the slot I'm asking about simply based on the content of the dialogue. And I will provide you with an example.", help = "")
     parser.add_argument("--instruct", type=str, 
-                        default="Answer in the format {‘domain’: , ‘slot’: , ‘value’: }. Track each slot-value if multiple are present in the sentence without any explanation. Choose the domain from ['Hospital', 'Restaurant', 'Hotel', 'Attraction', 'Taxi', 'Train', 'Police', 'Bus', 'General']. Perform Dialogue State Tracking for the given utterance:", help = "")
+                        default="Answer in the format {‘domain’: , ‘slot’: , ‘value’: }. Track each slot-value if multiple are present in the sentence without any explanation. Perform Dialogue State Tracking for the given utterance:", help = "")
     parser.add_argument("--output_dir", type=str, default="./")
     parser.add_argument("--output_file", type=str, default="GPT3.5_self_sgd.txt")
 
