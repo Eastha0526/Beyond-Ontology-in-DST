@@ -33,7 +33,7 @@ python3 finetune.py --base_model 'meta-llama/Meta-Llama-3-8B' \
 ```
 Training on a single Nvidia 4090 GPU is expected to take approximately 180 hours. Upon completion, the fine-tuned model weights will be saved in `$output_dir`.
 
-## DST Inference (`generate_zero_shot.py`, `generate_gpt.py`)
+## DST Inference (`generate_zero_shot.py`, `gpt.py`)
 
 You can load the provided weights directly from the \checkpoint folder and perform inference.
 
@@ -83,15 +83,3 @@ python3 train_gnn.py --data_dir '$DATA_DIR' \
 
 They have been a great addition to our research.
 
-## Citation
-
-If you can cite [our paper]():
-
-```
-@article{lee2024atom,
-title={To Ontology-free and Beyond: Dialogue State Tracking for Goal-oriented Chatbot},
-author={Sejin Lee, Dongha Kim, and Min Song},
-journal={arXiv preprint },
-year={2024}
-}
-```
