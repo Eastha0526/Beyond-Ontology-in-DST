@@ -79,5 +79,3 @@ if __name__ == '__main__':
         
         with open(output_filename, 'w') as f:
             json.dump(dataset_data, f, indent=4)    
-    print("done.")
-    print(f"原本的样本数量为：{original_number}。被删掉的样本数量为：{except_number}。最终该训练集的样本总数为：{len(dataset_data)}")
