@@ -52,7 +52,7 @@ python3 generate_zero_shot.py --load_8bit True \
 How to make inference with GPT API:
 
 ```ruby
-python3 generate.py --temperature 0.2 \
+python3 gpt.py --temperature 0.2 \
                     --test_data_dir '$DATA_DIR' \
                     --test_data_idx '$DATA_DIR' \
                     --output_dir '$OUTPUT_DIR' \
