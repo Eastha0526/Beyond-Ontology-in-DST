@@ -19,6 +19,7 @@ The three benchmark Datasets can be downloaded at:
 - MultiWOZ 2.0 : https://github.com/budzianowski/multiwoz
 - MultiWOZ 2.4 : https://github.com/smartyfh/MultiWOZ2.4
 - SGD : https://github.com/google-research-datasets/dstc8-schema-guided-dialogue
+- Persona Chat : https://www.kaggle.com/datasets/atharvjairath/personachat
 
 We were provided with preprocessing scripts and base scripts by [LDST](https://github.com/WoodScene/LDST).
 
