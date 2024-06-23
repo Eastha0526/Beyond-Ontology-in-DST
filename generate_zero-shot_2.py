@@ -26,7 +26,7 @@ except:  # noqa: E722
 
 def main(
     load_8bit: bool = True,
-    base_model: str = "meta-llama/Meta-Llama-3-8B-Instruct",
+    base_model: str = "meta-llama/Meta-Llama-3-8B",
     lora_weights: str = "./Checkpoint_files/checkpoint-3200",
     prompt_template: str = "",  # The prompt template to use, will default to alpaca.
     server_name: str = "0.0.0.0",  # Allows to listen on all interfaces by providing '0.
@@ -168,7 +168,7 @@ def main(
 
 
     file_list = []
-    with open("valListFile.txt", 'r') as file:
+    with open("testFile.txt", 'r') as file:
         for line in file:
             file_list.append(line.strip())
 
