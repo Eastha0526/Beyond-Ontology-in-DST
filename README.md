@@ -72,7 +72,7 @@ python3 eval.py --data_dir '$DATA_DIR' \
 To train the gnn with the VGAE model we created 
 
 ```ruby
-python3 train_gnn.py --data_dir '$DATA_DIR' \
+python3 GNN.py --data_dir '$DATA_DIR' \
                      --output_dir '$OUTPUT_DIR'
 ```
 
